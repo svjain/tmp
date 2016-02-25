@@ -6,15 +6,12 @@
  */
 
 var alertsConfig = {
-	"PoolCountDelta_Pool": [12, 'MBS Pool Difference'],
-	"LoanCountDelta_Pool": [22, 'MBS Loan Difference'],
-	"LoanCountDelta_Loan": [32, 'Cash Loan Difference'],
-	"UPBAmountDelta_Pool": [42, 'MBS Loan UPB Amount Difference'],
-	"UPBAmountDelta_Loan": [52, 'Cash Loan UPB Amount Difference'],
-	"LoanCountDelta_MBS_LDNG": [12, 'MBS Loan Difference'],
-	"UPBAmountDelta_Cash_LDNG": [22, 'MBS Cash UPB Amount Difference'],
-	"UPBAmountDelta_MBS_LDNG": [32, 'MBS Loan UPB Amount Difference'],
-	"LoanCountDelta_Cash_LDNG": [42, 'Cash Loan Difference']
+	"PoolCountDelta_Pool": [1, 'MBS Pool Difference'],
+	"LoanCountDelta_Pool": [1, 'MBS Loan Difference'],
+	"LoanCountDelta_Loan": [1, 'Cash Loan Difference'],
+	"UPBAmountDelta_Pool": [1, 'MBS Loan UPB Amount Difference'],
+	"UPBAmountDelta_Loan": [1, 'Cash Loan UPB Amount Difference'],
+	"LoanCountDelta_Cash_LDNG": [1, 'Cash Loan Difference']
 };
 
 var bizEDIInterfaceData = {keys: [], data: [{"label": "ADS", "data": [], "total": [], "diff": []}, {"label": "EDI", "data": [], "total": [], "diff": []}]};
@@ -202,9 +199,6 @@ var fannieMaeBizApp = new function() {
 	};
 	
 	_this.updateBizStackData = function(data, start, end) {
-		//var startD = parseInt(start.substr(6, 2)) + 1;
-		//var endD = parseInt(end.substr(6, 2));
-		
 		if ( curPage.business == 'ads' ) {
 			bizEDIInterfaceData = {keys: [], data: [{"label": "ADS", "data": [], "total": [], "diff": []}, {"label": "EDI", "data": [], "total": [], "diff": []}]};
 			bizEDIEntityMBSCountData = {keys: [], data: [{"label": "ADS Loan Count", "data": [], "total": [], "diff": []}, {"label": "EDI Loan Count", "data": [], "total": [], "diff": []}, {"label": "ADS Pool Count", "data": [], "total": [], "diff": []}, {"label": "EDI Pool Count", "data": [], "total": [], "diff": []}]};
@@ -219,45 +213,42 @@ var fannieMaeBizApp = new function() {
 				time = new Date(time).valueOf();
 				
 				bizEDIInterfaceData.keys.push(time);
-				bizEDIInterfaceData.data[0].diff.push((d.MBSLoanCount_ADS + d.MBSPoolCount_ADS) - (d.MBSLoanCount_EDI + d.MBSPoolCount_EDI));
+				bizEDIInterfaceData.data[0].diff.push(((d.MBSLoanCount_ADS + d.MBSPoolCount_ADS) - (d.MBSLoanCount_EDI + d.MBSPoolCount_EDI)).toFixed(1));
 				bizEDIInterfaceData.data[0].data.push([time, (d.MBSLoanCount_ADS + d.MBSPoolCount_ADS)]);
-				bizEDIInterfaceData.data[1].diff.push((d.MBSLoanCount_ADS + d.MBSPoolCount_ADS) - (d.MBSLoanCount_EDI + d.MBSPoolCount_EDI));
+				bizEDIInterfaceData.data[1].diff.push(((d.MBSLoanCount_ADS + d.MBSPoolCount_ADS) - (d.MBSLoanCount_EDI + d.MBSPoolCount_EDI)).toFixed(1));
 				bizEDIInterfaceData.data[1].data.push([time, (d.MBSLoanCount_EDI + d.MBSPoolCount_EDI)]);
 				
 				bizEDIEntityMBSCountData.keys.push(time);
-				bizEDIEntityMBSCountData.data[0].diff.push(d.MBSLoanCount_ADS - d.MBSLoanCount_EDI);
+				bizEDIEntityMBSCountData.data[0].diff.push((d.MBSLoanCount_ADS - d.MBSLoanCount_EDI).toFixed(1));
 				bizEDIEntityMBSCountData.data[0].data.push([time, d.MBSLoanCount_ADS]);
-				bizEDIEntityMBSCountData.data[1].diff.push(d.MBSLoanCount_ADS - d.MBSLoanCount_EDI);
+				bizEDIEntityMBSCountData.data[1].diff.push((d.MBSLoanCount_ADS - d.MBSLoanCount_EDI).toFixed(1));
 				bizEDIEntityMBSCountData.data[1].data.push([time, d.MBSLoanCount_EDI]);
 				
-				bizEDIEntityMBSCountData.data[2].diff.push(d.MBSPoolCount_ADS - d.MBSPoolCount_EDI);
+				bizEDIEntityMBSCountData.data[2].diff.push((d.MBSPoolCount_ADS - d.MBSPoolCount_EDI).toFixed(1));
 				bizEDIEntityMBSCountData.data[2].data.push([time, d.MBSPoolCount_ADS]);
-				bizEDIEntityMBSCountData.data[3].diff.push(d.MBSPoolCount_ADS - d.MBSPoolCount_EDI);
+				bizEDIEntityMBSCountData.data[3].diff.push((d.MBSPoolCount_ADS - d.MBSPoolCount_EDI).toFixed(1));
 				bizEDIEntityMBSCountData.data[3].data.push([time, d.MBSPoolCount_EDI]);
 				
 				bizEDIEntityMBSAmountData.keys.push(time);
-				bizEDIEntityMBSAmountData.data[0].diff.push(d.MBSLoanUPBAmount_ADS - d.MBSLoanUPBAmount_EDI);
+				bizEDIEntityMBSAmountData.data[0].diff.push((d.MBSLoanUPBAmount_ADS - d.MBSLoanUPBAmount_EDI).toFixed(1));
 				bizEDIEntityMBSAmountData.data[0].data.push([time, d.MBSLoanUPBAmount_ADS]);
-				bizEDIEntityMBSAmountData.data[1].diff.push(d.MBSLoanUPBAmount_ADS - d.MBSLoanUPBAmount_EDI);
+				bizEDIEntityMBSAmountData.data[1].diff.push((d.MBSLoanUPBAmount_ADS - d.MBSLoanUPBAmount_EDI).toFixed(1));
 				bizEDIEntityMBSAmountData.data[1].data.push([time, d.MBSLoanUPBAmount_EDI]);
 				
 				bizEDIEntityCashCountData.keys.push(time);
-				bizEDIEntityCashCountData.data[0].diff.push(d.CashLoanCount_ADS - d.CashLoanCount_EDI);
+				bizEDIEntityCashCountData.data[0].diff.push((d.CashLoanCount_ADS - d.CashLoanCount_EDI).toFixed(1));
 				bizEDIEntityCashCountData.data[0].data.push([time, d.CashLoanCount_ADS]);
-				bizEDIEntityCashCountData.data[1].diff.push(d.CashLoanCount_ADS - d.CashLoanCount_EDI);
+				bizEDIEntityCashCountData.data[1].diff.push((d.CashLoanCount_ADS - d.CashLoanCount_EDI).toFixed(1));
 				bizEDIEntityCashCountData.data[1].data.push([time, d.CashLoanCount_EDI]);
 				
 				bizEDIEntityCashAmountData.keys.push(time);
-				bizEDIEntityCashAmountData.data[0].diff.push(d.CashLoanUPBAmount_ADS - d.CashLoanUPBAmount_EDI);
+				bizEDIEntityCashAmountData.data[0].diff.push((d.CashLoanUPBAmount_ADS - d.CashLoanUPBAmount_EDI).toFixed(1));
 				bizEDIEntityCashAmountData.data[0].data.push([time, d.CashLoanUPBAmount_ADS]);
-				bizEDIEntityCashAmountData.data[1].diff.push(d.CashLoanUPBAmount_ADS - d.CashLoanUPBAmount_EDI);
+				bizEDIEntityCashAmountData.data[1].diff.push((d.CashLoanUPBAmount_ADS - d.CashLoanUPBAmount_EDI).toFixed(1));
 				bizEDIEntityCashAmountData.data[1].data.push([time, d.CashLoanUPBAmount_EDI]);
 			}
 			
 			for ( var dt = start; dt <= end; dt.setDate(dt.getDate() + 1) ) {
-				
-			//for ( var i=startD; i<endD; i++ ) {
-				//var time = start.substr(0, 4) + '/' + start.substr(4, 2) + '/' + ('0'+i).slice(-2).toString();
 				var time = dt.valueOf();
 				
 				if ( $.inArray(time, bizEDIInterfaceData.keys) == -1 ) {
@@ -324,40 +315,37 @@ var fannieMaeBizApp = new function() {
 				time = new Date(time).valueOf();
 				
 				bizLDNGInterfaceData.keys.push(time);
-				bizLDNGInterfaceData.data[0].diff.push((d.MBSLoanCount_LDNG2ADS + d.CashLoanCount_LDNG2ADS) - (d.MBSLoanCount_LDNG + d.CashLoanCount_LDNG));
+				bizLDNGInterfaceData.data[0].diff.push(((d.MBSLoanCount_LDNG2ADS + d.CashLoanCount_LDNG2ADS) - (d.MBSLoanCount_LDNG + d.CashLoanCount_LDNG)).toFixed(1));
 				bizLDNGInterfaceData.data[0].data.push([time, (d.MBSLoanCount_LDNG2ADS + d.CashLoanCount_LDNG2ADS)]);
-				bizLDNGInterfaceData.data[1].diff.push((d.MBSLoanCount_LDNG2ADS + d.CashLoanCount_LDNG2ADS) - (d.MBSLoanCount_LDNG + d.CashLoanCount_LDNG));
+				bizLDNGInterfaceData.data[1].diff.push(((d.MBSLoanCount_LDNG2ADS + d.CashLoanCount_LDNG2ADS) - (d.MBSLoanCount_LDNG + d.CashLoanCount_LDNG)).toFixed(1));
 				bizLDNGInterfaceData.data[1].data.push([time, (d.MBSLoanCount_LDNG + d.CashLoanCount_LDNG)]);
 				
 				bizLDNGEntityMBSCountData.keys.push(time);
-				bizLDNGEntityMBSCountData.data[0].diff.push(d.MBSLoanCount_LDNG2ADS - d.MBSLoanCount_LDNG);
+				bizLDNGEntityMBSCountData.data[0].diff.push((d.MBSLoanCount_LDNG2ADS - d.MBSLoanCount_LDNG).toFixed(1));
 				bizLDNGEntityMBSCountData.data[0].data.push([time, d.MBSLoanCount_LDNG2ADS]);
-				bizLDNGEntityMBSCountData.data[1].diff.push(d.MBSLoanCount_LDNG2ADS - d.MBSLoanCount_LDNG);
+				bizLDNGEntityMBSCountData.data[1].diff.push((d.MBSLoanCount_LDNG2ADS - d.MBSLoanCount_LDNG).toFixed(1));
 				bizLDNGEntityMBSCountData.data[1].data.push([time, d.MBSLoanCount_LDNG]);
 				
 				bizLDNGEntityMBSAmountData.keys.push(time);
-				bizLDNGEntityMBSAmountData.data[0].diff.push(d.MBSLoanUPBAmount_LDNG2ADS - d.MBSLoanUPBAmount_LDNG);
+				bizLDNGEntityMBSAmountData.data[0].diff.push((d.MBSLoanUPBAmount_LDNG2ADS - d.MBSLoanUPBAmount_LDNG).toFixed(1));
 				bizLDNGEntityMBSAmountData.data[0].data.push([time, d.MBSLoanUPBAmount_LDNG2ADS]);
-				bizLDNGEntityMBSAmountData.data[1].diff.push(d.MBSLoanUPBAmount_LDNG2ADS - d.MBSLoanUPBAmount_LDNG);
+				bizLDNGEntityMBSAmountData.data[1].diff.push((d.MBSLoanUPBAmount_LDNG2ADS - d.MBSLoanUPBAmount_LDNG).toFixed(1));
 				bizLDNGEntityMBSAmountData.data[1].data.push([time, d.MBSLoanUPBAmount_LDNG]);
 				
 				bizLDNGEntityCashCountData.keys.push(time);
-				bizLDNGEntityCashCountData.data[0].diff.push(d.CashLoanCount_LDNG2ADS - d.CashLoanCount_LDNG);
+				bizLDNGEntityCashCountData.data[0].diff.push((d.CashLoanCount_LDNG2ADS - d.CashLoanCount_LDNG).toFixed(1));
 				bizLDNGEntityCashCountData.data[0].data.push([time, d.CashLoanCount_LDNG2ADS]);
-				bizLDNGEntityCashCountData.data[1].diff.push(d.CashLoanCount_LDNG2ADS - d.CashLoanCount_LDNG);
+				bizLDNGEntityCashCountData.data[1].diff.push((d.CashLoanCount_LDNG2ADS - d.CashLoanCount_LDNG).toFixed(1));
 				bizLDNGEntityCashCountData.data[1].data.push([time, d.CashLoanCount_LDNG]);
 				
 				bizLDNGEntityCashAmountData.keys.push(time);
-				bizLDNGEntityCashAmountData.data[0].diff.push(d.CashLoanUPBAmount_LDNG2ADS - d.CashLoanUPBAmount_LDNG);
+				bizLDNGEntityCashAmountData.data[0].diff.push((d.CashLoanUPBAmount_LDNG2ADS - d.CashLoanUPBAmount_LDNG).toFixed(1));
 				bizLDNGEntityCashAmountData.data[0].data.push([time, d.CashLoanUPBAmount_LDNG2ADS]);
-				bizLDNGEntityCashAmountData.data[1].diff.push(d.CashLoanUPBAmount_LDNG2ADS - d.CashLoanUPBAmount_LDNG);
+				bizLDNGEntityCashAmountData.data[1].diff.push((d.CashLoanUPBAmount_LDNG2ADS - d.CashLoanUPBAmount_LDNG).toFixed(1));
 				bizLDNGEntityCashAmountData.data[1].data.push([time, d.CashLoanUPBAmount_LDNG]);
 			}
 			
 			for ( var dt = start; dt <= end; dt.setDate(dt.getDate() + 1) ) {
-				
-			//for ( var i=startD; i<endD; i++ ) {
-				//var time = start.substr(0, 4) + '/' + start.substr(4, 2) + '/' + ('0'+i).slice(-2).toString();
 				var time = dt.valueOf();
 				
 				if ( $.inArray(time, bizLDNGInterfaceData.keys) == -1 ) {
