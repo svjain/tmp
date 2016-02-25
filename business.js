@@ -615,8 +615,12 @@ var fannieMaeBizApp = new function() {
 			var trElem = '';
 			var o = obj._source;
 			
-			var time = o.ReconTimestamp.substr(0, 4) + '/' + o.ReconTimestamp.substr(4, 2) + '/' + o.ReconTimestamp.substr(6, 2);
-			var date = new Date(time);
+			var reconDateStr = o.ReconTimestamp.substr(0, 4) + '/' + o.ReconTimestamp.substr(4, 2) + '/' + o.ReconTimestamp.substr(6, 2);
+			var reconDate = new Date(reconDateStr);
+			reconDate = reconDate.toString();
+			reconDate = reconDate.substr(0, 15);
+			
+			var date = new Date(o.timetsamp);
 			var fields = [];
 			
 			$.each(alertsConfig, function(k, val) {
@@ -632,6 +636,7 @@ var fannieMaeBizApp = new function() {
 			
 			trElem = trElem + '<tr>' +
 				'<td>' + date + '</td>' +
+				'<td>' + reconDate + '</td>' +
 				'<td>' + desc + '</td>' +
 				'</tr>';
 			
