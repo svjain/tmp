@@ -15,16 +15,17 @@ var alertsConfig = {
 };
 
 var bizEDIInterfaceData = {keys: [], data: [{"label": "ADS", "data": [], "total": [], "diff": []}, {"label": "EDI", "data": [], "total": [], "diff": []}]};
-var bizEDIEntityMBSCountData = {keys: [], data: [{"label": "ADS Loan Count", "data": [], "total": [], "diff": []}, {"label": "EDI Loan Count", "data": [], "total": [], "diff": []}, {"label": "ADS Pool Count", "data": [], "total": [], "diff": []}, {"label": "EDI Pool Count", "data": [], "total": [], "diff": []}]};
-var bizEDIEntityMBSAmountData = {keys: [], data: [{"label": "ADS MBS UPB Amount", "data": [], "total": [], "diff": []}, {"label": "EDI MBS UPB Amount", "data": [], "total": [], "diff": []}]};
-var bizEDIEntityCashCountData = {keys: [], data: [{"label": "ADS Cash Count", "data": [], "total": [], "diff": []}, {"label": "EDI Cash Count", "data": [], "total": [], "diff": []}]};
-var bizEDIEntityCashAmountData = {keys: [], data: [{"label": "ADS Cash UPB Amount", "data": [], "total": [], "diff": []}, {"label": "EDI Cash UPB Amount", "data": [], "total": [], "diff": []}]};
+var bizEDIEntityMBSCountData = {keys: [], data: [{"label": "ADS Loan Count", "data": [], "total": [], "diff": []}, {"label": "EDI Loan Count", "data": [], "total": [], "diff": []}]};
+var bizEDIEntityMBSPoolCountData = {keys: [], data: [{"label": "ADS Pool Count", "data": [], "total": [], "diff": []}, {"label": "EDI Pool Count", "data": [], "total": [], "diff": []}]};
+var bizEDIEntityMBSAmountData = {keys: [], data: [{"label": "ADS Loan UPB Amount", "data": [], "total": [], "diff": []}, {"label": "EDI Loan UPB Amount", "data": [], "total": [], "diff": []}]};
+var bizEDIEntityCashCountData = {keys: [], data: [{"label": "ADS Loan Count", "data": [], "total": [], "diff": []}, {"label": "EDI Loan Count", "data": [], "total": [], "diff": []}]};
+var bizEDIEntityCashAmountData = {keys: [], data: [{"label": "ADS Loan UPB Amount", "data": [], "total": [], "diff": []}, {"label": "EDI Loan UPB Amount", "data": [], "total": [], "diff": []}]};
 
 var bizLDNGInterfaceData = {keys: [], data: [{"label": "ADS", "data": [], "total": [], "diff": []}, {"label": "LDNG", "data": [], "total": [], "diff": []}]};
 var bizLDNGEntityMBSCountData = {keys: [], data: [{"label": "ADS Loan Count", "data": [], "total": [], "diff": []}, {"label": "LDNG Loan Count", "data": [], "total": [], "diff": []}]};
-var bizLDNGEntityMBSAmountData = {keys: [], data: [{"label": "ADS MBS UPB Amount", "data": [], "total": [], "diff": []}, {"label": "LDNG MBS UPB Amount", "data": [], "total": [], "diff": []}]};
-var bizLDNGEntityCashCountData = {keys: [], data: [{"label": "ADS Cash Count", "data": [], "total": [], "diff": []}, {"label": "LDNG Cash Count", "data": [], "total": [], "diff": []}]};
-var bizLDNGEntityCashAmountData = {keys: [], data: [{"label": "ADS Cash UPB Amount", "data": [], "total": [], "diff": []}, {"label": "LDNG Cash UPB Amount", "data": [], "total": [], "diff": []}]};
+var bizLDNGEntityMBSAmountData = {keys: [], data: [{"label": "ADS Loan UPB Amount", "data": [], "total": [], "diff": []}, {"label": "LDNG Loan UPB Amount", "data": [], "total": [], "diff": []}]};
+var bizLDNGEntityCashCountData = {keys: [], data: [{"label": "ADS Loan Count", "data": [], "total": [], "diff": []}, {"label": "LDNG Loan Count", "data": [], "total": [], "diff": []}]};
+var bizLDNGEntityCashAmountData = {keys: [], data: [{"label": "ADS Loan UPB Amount", "data": [], "total": [], "diff": []}, {"label": "LDNG Loan UPB Amount", "data": [], "total": [], "diff": []}]};
 
 var bizEDIBarOptions = $.extend(true, {}, groupBarGraphOptions);
 bizEDIBarOptions.colors = ["#93e0f8","#7a53a3","#de8ff6","#da4f12"];
@@ -78,6 +79,11 @@ var fannieMaeBizApp = new function() {
 		$('#bizEDIEntityMBSCountLegends a').on('click', function() {
 			$(this).parent().toggleClass('inactive');
 			_this.updateBizStackGraph("#bizEDIEntityMBSCountGraph", "#bizEDIEntityMBSCountLegends", bizEDIEntityMBSCountData, bizEDIBarOptions);
+		});
+		
+		$('#bizEDIEntityMBSPoolCountLegends a').on('click', function() {
+			$(this).parent().toggleClass('inactive');
+			_this.updateBizStackGraph("#bizEDIEntityMBSPoolCountGraph", "#bizEDIEntityMBSPoolCountLegends", bizEDIEntityMBSPoolCountData, bizEDIBarOptions);
 		});
 		
 		$('#bizEDIEntityMBSAmountLegends a').on('click', function() {
@@ -201,10 +207,11 @@ var fannieMaeBizApp = new function() {
 	_this.updateBizStackData = function(data, start, end) {
 		if ( curPage.business == 'ads' ) {
 			bizEDIInterfaceData = {keys: [], data: [{"label": "ADS", "data": [], "total": [], "diff": []}, {"label": "EDI", "data": [], "total": [], "diff": []}]};
-			bizEDIEntityMBSCountData = {keys: [], data: [{"label": "ADS Loan Count", "data": [], "total": [], "diff": []}, {"label": "EDI Loan Count", "data": [], "total": [], "diff": []}, {"label": "ADS Pool Count", "data": [], "total": [], "diff": []}, {"label": "EDI Pool Count", "data": [], "total": [], "diff": []}]};
-			bizEDIEntityMBSAmountData = {keys: [], data: [{"label": "ADS MBS UPB Amount", "data": [], "total": [], "diff": []}, {"label": "EDI MBS UPB Amount", "data": [], "total": [], "diff": []}]};
-			bizEDIEntityCashCountData = {keys: [], data: [{"label": "ADS Cash Count", "data": [], "total": [], "diff": []}, {"label": "EDI Cash Count", "data": [], "total": [], "diff": []}]};
-			bizEDIEntityCashAmountData = {keys: [], data: [{"label": "ADS Cash UPB Amount", "data": [], "total": [], "diff": []}, {"label": "EDI Cash UPB Amount", "data": [], "total": [], "diff": []}]};
+			bizEDIEntityMBSCountData = {keys: [], data: [{"label": "ADS Loan Count", "data": [], "total": [], "diff": []}, {"label": "EDI Loan Count", "data": [], "total": [], "diff": []}]};
+			bizEDIEntityMBSPoolCountData = {keys: [], data: [{"label": "ADS Pool Count", "data": [], "total": [], "diff": []}, {"label": "EDI Pool Count", "data": [], "total": [], "diff": []}]};
+			bizEDIEntityMBSAmountData = {keys: [], data: [{"label": "ADS Loan UPB Amount", "data": [], "total": [], "diff": []}, {"label": "EDI Loan UPB Amount", "data": [], "total": [], "diff": []}]};
+			bizEDIEntityCashCountData = {keys: [], data: [{"label": "ADS Loan Count", "data": [], "total": [], "diff": []}, {"label": "EDI Loan Count", "data": [], "total": [], "diff": []}]};
+			bizEDIEntityCashAmountData = {keys: [], data: [{"label": "ADS Loan UPB Amount", "data": [], "total": [], "diff": []}, {"label": "EDI Loan UPB Amount", "data": [], "total": [], "diff": []}]};
 			
 			for ( var i=0; i<data.length; i++ ) {
 				var d = data[i]._source;
@@ -224,10 +231,11 @@ var fannieMaeBizApp = new function() {
 				bizEDIEntityMBSCountData.data[1].diff.push((d.MBSLoanCount_ADS - d.MBSLoanCount_EDI).toFixed(1));
 				bizEDIEntityMBSCountData.data[1].data.push([time, d.MBSLoanCount_EDI]);
 				
-				bizEDIEntityMBSCountData.data[2].diff.push((d.MBSPoolCount_ADS - d.MBSPoolCount_EDI).toFixed(1));
-				bizEDIEntityMBSCountData.data[2].data.push([time, d.MBSPoolCount_ADS]);
-				bizEDIEntityMBSCountData.data[3].diff.push((d.MBSPoolCount_ADS - d.MBSPoolCount_EDI).toFixed(1));
-				bizEDIEntityMBSCountData.data[3].data.push([time, d.MBSPoolCount_EDI]);
+				bizEDIEntityMBSPoolCountData.keys.push(time);
+				bizEDIEntityMBSPoolCountData.data[0].diff.push((d.MBSPoolCount_ADS - d.MBSPoolCount_EDI).toFixed(1));
+				bizEDIEntityMBSPoolCountData.data[0].data.push([time, d.MBSPoolCount_ADS]);
+				bizEDIEntityMBSPoolCountData.data[1].diff.push((d.MBSPoolCount_ADS - d.MBSPoolCount_EDI).toFixed(1));
+				bizEDIEntityMBSPoolCountData.data[1].data.push([time, d.MBSPoolCount_EDI]);
 				
 				bizEDIEntityMBSAmountData.keys.push(time);
 				bizEDIEntityMBSAmountData.data[0].diff.push((d.MBSLoanUPBAmount_ADS - d.MBSLoanUPBAmount_EDI).toFixed(1));
@@ -265,10 +273,14 @@ var fannieMaeBizApp = new function() {
 					bizEDIEntityMBSCountData.data[0].data.push([time, 0]);
 					bizEDIEntityMBSCountData.data[1].diff.push(0);
 					bizEDIEntityMBSCountData.data[1].data.push([time, 0]);
-					bizEDIEntityMBSCountData.data[2].diff.push(0);
-					bizEDIEntityMBSCountData.data[2].data.push([time, 0]);
-					bizEDIEntityMBSCountData.data[3].diff.push(0);
-					bizEDIEntityMBSCountData.data[3].data.push([time, 0]);
+				}
+				
+				if ( $.inArray(time, bizEDIEntityMBSPoolCountData.keys) == -1 ) {
+					bizEDIEntityMBSPoolCountData.keys.push(time);
+					bizEDIEntityMBSPoolCountData.data[0].diff.push(0);
+					bizEDIEntityMBSPoolCountData.data[0].data.push([time, 0]);
+					bizEDIEntityMBSPoolCountData.data[1].diff.push(0);
+					bizEDIEntityMBSPoolCountData.data[1].data.push([time, 0]);
 				}
 				
 				if ( $.inArray(time, bizEDIEntityMBSAmountData.keys) == -1 ) {
@@ -298,15 +310,16 @@ var fannieMaeBizApp = new function() {
 			
 			_this.createBizStackGraph("#bizEDIInterfaceGraph", bizEDIInterfaceData, bizEDIBarOptions);
 			_this.createBizStackGraph("#bizEDIEntityMBSCountGraph", bizEDIEntityMBSCountData, bizEDIBarOptions);
+			_this.createBizStackGraph("#bizEDIEntityMBSPoolCountGraph", bizEDIEntityMBSPoolCountData, bizEDIBarOptions);
 			_this.createBizStackGraph("#bizEDIEntityMBSAmountGraph", bizEDIEntityMBSAmountData, bizEDIBarOptions);
 			_this.createBizStackGraph("#bizEDIEntityCashCountGraph", bizEDIEntityCashCountData, bizEDIBarOptions);
 			_this.createBizStackGraph("#bizEDIEntityCashAmountGraph", bizEDIEntityCashAmountData, bizEDIBarOptions);
 		} else {
 			bizLDNGInterfaceData = {keys: [], data: [{"label": "ADS", "data": [], "total": [], "diff": []}, {"label": "LDNG", "data": [], "total": [], "diff": []}]};
 			bizLDNGEntityMBSCountData = {keys: [], data: [{"label": "ADS Loan Count", "data": [], "total": [], "diff": []}, {"label": "LDNG Loan Count", "data": [], "total": [], "diff": []}]};
-			bizLDNGEntityMBSAmountData = {keys: [], data: [{"label": "ADS MBS UPB Amount", "data": [], "total": [], "diff": []}, {"label": "LDNG MBS UPB Amount", "data": [], "total": [], "diff": []}]};
-			bizLDNGEntityCashCountData = {keys: [], data: [{"label": "ADS Cash Count", "data": [], "total": [], "diff": []}, {"label": "LDNG Cash Count", "data": [], "total": [], "diff": []}]};
-			bizLDNGEntityCashAmountData = {keys: [], data: [{"label": "ADS Cash UPB Amount", "data": [], "total": [], "diff": []}, {"label": "LDNG Cash UPB Amount", "data": [], "total": [], "diff": []}]};
+			bizLDNGEntityMBSAmountData = {keys: [], data: [{"label": "ADS Loan UPB Amount", "data": [], "total": [], "diff": []}, {"label": "LDNG Loan UPB Amount", "data": [], "total": [], "diff": []}]};
+			bizLDNGEntityCashCountData = {keys: [], data: [{"label": "ADS Loan Count", "data": [], "total": [], "diff": []}, {"label": "LDNG Loan Count", "data": [], "total": [], "diff": []}]};
+			bizLDNGEntityCashAmountData = {keys: [], data: [{"label": "ADS Loan UPB Amount", "data": [], "total": [], "diff": []}, {"label": "LDNG Loan UPB Amount", "data": [], "total": [], "diff": []}]};
 			
 			for ( var i=0; i<data.length; i++ ) {
 				var d = data[i]._source;
@@ -447,87 +460,7 @@ var fannieMaeBizApp = new function() {
 	
 	_this.showGraphLabels = function(graph, placeholder) {
 		var graphData = graph.getData();
-		if ( placeholder == '#bizEDIEntityMBSCountGraph' ) {
-			var offset = [[], []];
-			
-			if ( graphData[0] ) {
-				$.each(graphData[0].data, function(i, el) {
-					var o = graph.pointOffset({x: el[0], y: el[1]});
-					offset[0][i] = {x: 0, y: 0, val: 0};
-					offset[0][i].x = o.left;
-					offset[0][i].y = o.top;
-					offset[0][i].val = el[1];
-				});
-			}
-			
-			if ( graphData[1] ) {
-				$.each(graphData[1].data, function(i, el){
-					var o = graph.pointOffset({x: el[0], y: el[1]});
-					offset[0][i].y = Math.min(o.top, offset[0][i].y);
-				});
-			}
-			
-			var d = [];
-			if ( graphData[0] ) {
-				d = graphData[0].data;
-			} else if ( graphData[1] ) {
-				d = graphData[1].data;
-			}
-			
-			$.each(d, function(i, el) {
-				if ( offset[0][i].val > 0 ) {
-					var diff = Math.abs(graphData[0].diff[i]);
-					var label = (diff == 0) ? 'Match (0)' : 'No Match (' + diff + ')';
-					$('<div class="data-point-label">'+ label +'</div>').css( {
-						position: 'absolute',
-						left: offset[0][i].x - 50,
-						top: offset[0][i].y - 20,
-						display: 'none',
-						fontSize: '10px'
-					}).appendTo(graph.getPlaceholder()).fadeIn('slow');
-				}
-			});
-			
-			if ( graphData[2] ) {
-				$.each(graphData[2].data, function(i, el) {
-					var o = graph.pointOffset({x: el[0], y: el[1]});
-					offset[1][i] = {x: 0, y: 0};
-					offset[1][i].x = o.left;
-					offset[1][i].y = o.top;
-					offset[1][i].val = el[1];
-				});
-			}
-			
-			if ( graphData[3] ) {
-				$.each(graphData[3].data, function(i, el){
-					var o = graph.pointOffset({x: el[0], y: el[1]});
-					offset[1][i].y = Math.min(o.top, offset[1][i].y);
-				});
-			}
-			
-			var d = [];
-			if ( graphData[2] ) {
-				d = graphData[2].data;
-			} else if ( graphData[3] ) {
-				d = graphData[3].data;
-			}
-			
-			$.each(d, function(i, el) {
-				if ( offset[1][i].val > 0 ) {
-					var diff = Math.abs(graphData[2].diff[i]);
-					var label = (diff == 0) ? 'Match (0)' : 'No Match (' + diff + ')';
-					var color = (diff == 0) ? '#333333' : '#ff0000';
-					$('<div class="data-point-label">'+ label +'</div>').css( {
-						position: 'absolute',
-						left: offset[1][i].x - 7,
-						top: offset[1][i].y - 20,
-						display: 'none',
-						fontSize: '10px',
-						color: color
-					}).appendTo(graph.getPlaceholder()).fadeIn('slow');
-				}
-			});
-		} else {
+		
 			var offset = [];
 			
 			if ( graphData[0] ) {
@@ -569,7 +502,7 @@ var fannieMaeBizApp = new function() {
 					}).appendTo(graph.getPlaceholder()).fadeIn('slow');
 				}
 			});
-		}
+		
 	};
 	
 	/** ALERTS TABLE START **/
